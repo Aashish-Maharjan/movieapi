@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie List</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    h1 { text-align: center; }
+    #movie-list { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .movie { border: 1px solid #ddd; padding: 10px; width: 200px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .loading, .error { text-align: center; font-size: 18px; color: #555; }
+  </style>
+</head>
+<body>
+  <h1>Movie List</h1>
+  <div id="loading" class="loading">Loading...</div>
+  <div id="error" class="error" style="display:none;">Failed to load movies</div>
+  <div id="movie-list"></div>
+
+  <script>
+    const movieList = document.getElementById("movie-list");
+    const loading = document.getElementById("loading");
+    const error = document.getElementById("error");
+
+    async function fetchMovies() {
+      try {
+        const response = await fetch("http://localhost:5500/api/movies");
+        if (!response.ok) throw new Error("Network response was not ok");
+        const movies = await response.json();
+        loading.style.display = "none";
+        renderMovies(movies);
+      } catch (err) {
+        loading.style.display = "none";
+        error.style.display = "block";
+        console.error("Error fetching movies:", err);
+      }
+    }
+
+    function renderMovies(movies) {
+      movies.forEach(movie => {
+        const movieDiv = document.createElement("div");
+        movieDiv.className = "movie";
+        movieDiv.innerHTML = `
+          <h3>${movie.title}</h3>
+          <p>Director: ${movie.director}</p>
+          <p>Year: ${movie.year}</p>
+          <p>Duration: ${movie.duration} mins</p>
+          <p>Rating: ${movie.rating}</p>
+        `;
+        movieList.appendChild(movieDiv);
+      });
+    }
+
+    fetchMovies();
+  </script>
+</body>
+</html>

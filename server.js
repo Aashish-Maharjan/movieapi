@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const moviesRoute = require("./routes/movies");
+const moviesRoute = require("./routes/routes");
 
 const app = express();
 
@@ -11,7 +11,7 @@ app.use(cors());
 
 // MongoDB Connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/moviesdb", { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect("mongodb+srv://mhzaashish:k9LW1aRz4nf9fhlv@cluster0.jamxd.mongodb.net/api/movies?retryWrites=true&w=majority&appName=Cluster0", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
@@ -19,7 +19,7 @@ mongoose
 app.use("/api/movies", moviesRoute);
 
 // Start Server
-const PORT = 3000;
+const PORT = 5500;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
