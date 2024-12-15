@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Movie = require("../models/Movie");
 
-// @route GET /api/movies
-// @desc Retrieve all movies
+
 router.get("/", async (req, res) => {
   try {
     const movies = await Movie.find();

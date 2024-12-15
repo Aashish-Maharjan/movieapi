@@ -25,7 +25,7 @@
 
     async function fetchMovies() {
       try {
-        const response = await fetch("http://localhost:5500/api/movies");
+        const response = await fetch("http://localhost:5500/api/routes");
         if (!response.ok) throw new Error("Network response was not ok");
         const movies = await response.json();
         loading.style.display = "none";
